@@ -8,4 +8,13 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
+    <plugin name="cordova-plugin-firebase-messaging" spec="latest" />
+    <!-- Enable Google Services plugin -->
+    <preference name="GradlePluginGoogleServicesEnabled" value="true" />
+    <preference name="GradlePluginGoogleServicesVersion" value="4.4.2" />
+
+    <!-- Additional Firebase preferences (if needed in the future) -->
+    <preference name="GradlePluginKotlinEnabled" value="true" />
+    <preference name="KotlinVersion" value="1.8.0" />
 </widget>

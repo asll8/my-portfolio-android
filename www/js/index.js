@@ -47,45 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/**
- *
- * document.addEventListener("DOMContentLoaded", () => {
-    const aboutText = document.getElementById("about-text");
+document.addEventListener("deviceready", function () {
+    console.log("Device is ready!");
 
-    const words = aboutText.textContent.split(" ");
-    aboutText.innerHTML = words.map(word => `<span>${word}</span>`).join(" ");
-
-    const spans = aboutText.querySelectorAll("section p span");
-    spans.forEach(span => {
-        span.addEventListener("mouseover", () => {
-            span.style.color = "#64ffda";
+    if (typeof FirebaseMessaging !== "undefined") {
+        FirebaseMessaging.requestPermission().then(() => {
+            console.log("Notification permission granted.");
+            return FirebaseMessaging.getToken();
+        }).then((token) => {
+            console.log("Firebase token:", token);
+            alert("Firebase Token: " + token);
+        }).catch((err) => {
+            console.error("Error getting Firebase token:", err);
         });
 
-        span.addEventListener("mouseout", () => {
-            span.style.color = "#ccd6f6";
+        FirebaseMessaging.onMessage((payload) => {
+            console.log("Notification received:", payload);
+            alert("Notification received: " + JSON.stringify(payload.notification));
         });
-    });
-});
-
-const techStackP1 = [
-    "React.js",
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "Webpack",
-    "Git",
-    "Figma",
-    "Azure Services",
-    "Postman"
-];
-
-const techStackContainer = document.querySelector(".tech-stack-p1");
-
-techStackP1.forEach((tech) => {
-    const tag = document.createElement("span");
-    tag.textContent = tech;
-    tag.classList.add("tech-tag");
-    techStackContainer.appendChild(tag);
-});
-
-*/
+    } else {
+        console.error("FirebaseMessaging is not defined. Ensure the plugin is properly installed and initialized.");
+    }
+}, false);
